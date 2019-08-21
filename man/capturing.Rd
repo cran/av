@@ -26,10 +26,10 @@ frames.}
 \item{vfilter}{a string defining an ffmpeg filter graph. This is the same parameter
 as the \code{-vf} argument in the \code{ffmpeg} command line utility.}
 
-\item{audio}{optional file with sounds to add to the video}
+\item{audio}{audio or video input file with sound for the output video}
 
 \item{verbose}{emit some output and a progress meter counting processed images. Must
-be \code{TRUE} or \code{FALSE} or an integer with a valid \href{av_log_level}{log_level}.}
+be \code{TRUE} or \code{FALSE} or an integer with a valid \link{av_log_level}.}
 
 \item{...}{extra graphics parameters passed to \code{\link[=png]{png()}}}
 }
@@ -54,7 +54,7 @@ makeplot <- function(){
 video_file <- file.path(tempdir(), 'output.mp4')
 av_capture_graphics(makeplot(), video_file, 1280, 720, res = 144, vfilter = 'framerate=fps=10')
 av::av_video_info(video_file)
-utils::browseURL(video_file)}
+# utils::browseURL(video_file)}
 }
 \seealso{
 Other av: \code{\link{demo}}, \code{\link{encoding}},
