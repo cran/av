@@ -9,7 +9,7 @@
 #define VIDEO_TIME_BASE 1000
 #include <Rinternals.h>
 
-static int total_open_handles = 0;
+int total_open_handles = 0;
 
 typedef struct {
   int completed;
@@ -37,9 +37,13 @@ typedef struct {
   AVCodecContext *audio_encoder;
   const char * filter_string;
   const char * output_file;
+  const char * format_name;
   double duration;
+  int64_t max_len;
   int64_t count;
   int progress_pct;
+  int channels;
+  int sample_rate;
   SEXP in_files;
 } output_container;
 
@@ -280,7 +284,9 @@ static void add_video_output(output_container *output, int width, int height){
   video_encoder->time_base.num = 1;
   video_encoder->time_base.den = VIDEO_TIME_BASE;
   video_encoder->framerate = av_inv_q(video_encoder->time_base);
-  video_encoder->gop_size = 5; //ignored for AV_PICTURE_TYPE_I anyway
+
+  /* 2020: disabled because is increase the filesize a lot */
+  //video_encoder->gop_size = 25; //one keyframe every 25 frames
 
   /* Try to use codec preferred pixel format, otherwise default to YUV420 */
   video_encoder->pix_fmt = output->codec->pix_fmts ? output->codec->pix_fmts[0] : AV_PIX_FMT_YUV420P;
@@ -310,9 +316,9 @@ static void add_audio_output(output_container *container){
   bail_if_null(output_codec, "Failed to find default audio codec");
   AVCodecContext *audio_encoder = avcodec_alloc_context3(output_codec);
   bail_if_null(audio_encoder, "avcodec_alloc_context3 (audio)");
-  audio_encoder->channels = audio_decoder->channels;
-  audio_encoder->channel_layout = av_get_default_channel_layout(audio_decoder->channels);
-  audio_encoder->sample_rate = audio_decoder->sample_rate;
+  audio_encoder->channels = container->channels ? container->channels : audio_decoder->channels;
+  audio_encoder->channel_layout = av_get_default_channel_layout(audio_encoder->channels);
+  audio_encoder->sample_rate = container->sample_rate ? container->sample_rate : audio_decoder->sample_rate;
   audio_encoder->sample_fmt = output_codec->sample_fmts[0];
   audio_encoder->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
 
@@ -330,7 +336,7 @@ static void add_audio_output(output_container *container){
 static void open_output_file(int width, int height, output_container *output){
   /* Init container context (infers format from file extension) */
   AVFormatContext *muxer = NULL;
-  avformat_alloc_output_context2(&muxer, NULL, NULL, output->output_file);
+  avformat_alloc_output_context2(&muxer, NULL, output->format_name, output->output_file);
   bail_if_null(muxer, "avformat_alloc_output_context2");
   output->muxer = muxer;
 
@@ -355,6 +361,7 @@ static void sync_audio_stream(output_container * output, int64_t pts){
   int force_flush = pts == -1;
   int force_everything = pts == PTS_EVERYTHING;
   input_container * input = output->audio_input;
+  AVStream *audio_stream = output->audio_stream;
   if(input == NULL || input->completed)
     return;
   static AVPacket *pkt = NULL;
@@ -364,7 +371,7 @@ static void sync_audio_stream(output_container * output, int64_t pts){
     frame = av_frame_alloc();
   }
   while(force_everything || force_flush ||
-        av_compare_ts(output->audio_stream->cur_dts, output->audio_stream->time_base,
+        av_compare_ts(audio_stream->cur_dts, audio_stream->time_base,
                                      pts, output->video_stream->time_base) < 0) {
     int ret = avcodec_receive_packet(output->audio_encoder, pkt);
     if (ret == AVERROR(EAGAIN)){
@@ -406,17 +413,21 @@ static void sync_audio_stream(output_container * output, int64_t pts){
         }
       }
     } else if (ret == AVERROR_EOF){
-      av_log(NULL, AV_LOG_INFO, "Audio stream complete!\n");
+      av_log(NULL, AV_LOG_INFO, " - audio stream completed!\n");
       input->completed = 1;
       break;
     } else {
-      pkt->stream_index = output->audio_stream->index;
-      av_packet_rescale_ts(pkt, output->audio_encoder->time_base, output->audio_stream->time_base);
+      pkt->stream_index = audio_stream->index;
+      av_packet_rescale_ts(pkt, output->audio_encoder->time_base, audio_stream->time_base);
       bail_if(av_interleaved_write_frame(output->muxer, pkt), "av_interleaved_write_frame");
       if(force_everything){
         av_log(NULL, AV_LOG_INFO, "\rAdding audio frame %d at timestamp %.2fsec",
-               (int) output->audio_stream->nb_frames + 1, (double) output->audio_stream->cur_dts / 1000);
+               (int) audio_stream->nb_frames + 1, (double) audio_stream->cur_dts / 1000);
       }
+      if(output->max_len && av_compare_ts(audio_stream->cur_dts, audio_stream->time_base,
+                       output->max_len, (AVRational){1, AV_TIME_BASE}) > 0){
+        force_flush = 1;
+      };
       R_CheckUserInterrupt();
       av_packet_unref(pkt);
     }
@@ -463,9 +474,9 @@ static int encode_output_frames(output_container *output){
       bail_if(avcodec_send_frame(output->video_encoder, NULL), "avcodec_send_frame (flush video)");
     } else {
       bail_if(ret, "av_buffersink_get_frame");
-      frame->pict_type = AV_PICTURE_TYPE_I;
       if(output->muxer == NULL)
         open_output_file(frame->width, frame->height, output);
+      frame->quality = output->video_encoder->global_quality;
       bail_if(avcodec_send_frame(output->video_encoder, frame), "avcodec_send_frame");
       av_frame_unref(frame);
     }
@@ -549,6 +560,10 @@ static void read_from_input(const char *filename, output_container *output){
       break;
     bail_if(ret2, "avcodec_receive_frame");
     picture->pts = (output->count++) * output->duration;
+    //prevent keyframe at each image
+    //todo: find a way to do this for all length 1 input formats
+    if(decoder->codec->id == AV_CODEC_ID_PNG || decoder->codec->id == AV_CODEC_ID_MJPEG)
+      picture->pict_type = AV_PICTURE_TYPE_NONE;
     feed_to_filter(picture, output);
   } while(ret != AVERROR_EOF);
   close_input(&output->video_input);
@@ -605,9 +620,24 @@ static SEXP encode_audio_input(void *ptr){
   return R_NilValue;
 }
 
-SEXP R_convert_audio(SEXP audio, SEXP out_file){
+SEXP R_convert_audio(SEXP audio, SEXP out_file, SEXP out_format, SEXP out_channels,
+                     SEXP sample_rate, SEXP start_pos, SEXP max_len){
   output_container *output = av_mallocz(sizeof(output_container));
+  if(Rf_length(out_channels))
+    output->channels = Rf_asInteger(out_channels);
+  if(Rf_length(sample_rate))
+    output->sample_rate = Rf_asInteger(sample_rate);
+  if(Rf_length(out_format))
+    output->format_name = CHAR(STRING_ELT(out_format, 0));
   output->audio_input = open_audio_input(CHAR(STRING_ELT(audio, 0)));
+  if(Rf_length(start_pos)){
+    double pos = Rf_asReal(start_pos);
+    if(pos > 0)
+      av_seek_frame(output->audio_input->demuxer, -1, pos * AV_TIME_BASE, AVSEEK_FLAG_ANY);
+  }
+  if(Rf_length(max_len)){
+    output->max_len = Rf_asReal(max_len) * AV_TIME_BASE;
+  }
   output->output_file = CHAR(STRING_ELT(out_file, 0));
   R_UnwindProtect(encode_audio_input, output, close_output_file, output, NULL);
   return out_file;

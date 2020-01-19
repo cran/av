@@ -3,11 +3,28 @@
 \name{capturing}
 \alias{capturing}
 \alias{av_capture_graphics}
+\alias{av_spectrogram_video}
 \title{Record Video from Graphics Device}
 \usage{
-av_capture_graphics(expr, output = "output.mp4", width = 720,
-  height = 480, framerate = 1, vfilter = "null", audio = NULL,
-  verbose = TRUE, ...)
+av_capture_graphics(
+  expr,
+  output = "output.mp4",
+  width = 720,
+  height = 480,
+  framerate = 1,
+  vfilter = "null",
+  audio = NULL,
+  verbose = TRUE,
+  ...
+)
+
+av_spectrogram_video(
+  audio,
+  output = "output.mp4",
+  framerate = 25,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{expr}{an R expression that generates the graphics to capture}
@@ -26,7 +43,7 @@ frames.}
 \item{vfilter}{a string defining an ffmpeg filter graph. This is the same parameter
 as the \code{-vf} argument in the \code{ffmpeg} command line utility.}
 
-\item{audio}{audio or video input file with sound for the output video}
+\item{audio}{path to media file with audio stream}
 
 \item{verbose}{emit some output and a progress meter counting processed images. Must
 be \code{TRUE} or \code{FALSE} or an integer with a valid \link{av_log_level}.}
@@ -34,7 +51,9 @@ be \code{TRUE} or \code{FALSE} or an integer with a valid \link{av_log_level}.}
 \item{...}{extra graphics parameters passed to \code{\link[=png]{png()}}}
 }
 \description{
-Runs the expression and captures all plots into a video.
+Runs the expression and captures all plots into a video. The \link{av_spectrogram_video}
+function is a wrapper that plots data from \link{read_audio_fft} with a moving bar and
+background audio.
 }
 \examples{
 \donttest{
@@ -57,8 +76,11 @@ av::av_video_info(video_file)
 # utils::browseURL(video_file)}
 }
 \seealso{
-Other av: \code{\link{demo}}, \code{\link{encoding}},
-  \code{\link{formats}}, \code{\link{info}},
-  \code{\link{logging}}
+Other av: 
+\code{\link{demo}()},
+\code{\link{encoding}},
+\code{\link{formats}},
+\code{\link{info}},
+\code{\link{logging}}
 }
 \concept{av}
