@@ -1,3 +1,11 @@
+0.5
+  - Ported read_audio_bin() to pure C, match parameters with read_audio_fft()
+  - Fix total_time parameter in av_audio_convert() to account for start time
+  - Unit test now uses CPU time instead of elapsed time (BDR)
+  - Added start_time and end_time parameters to read_audio_fft()
+  - Rename av_video_info to av_media_info
+  - Minor tweaks to configure script
+
 0.4
   - Windows/MacOS: CRAN binary packages now ship with ffmpeg 4.2.2 + drivers: vorbis,
     vpx, ogg, lame, xvid, x264

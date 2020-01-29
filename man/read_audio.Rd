@@ -9,13 +9,21 @@ read_audio_fft(
   audio,
   window = hanning(1024),
   overlap = 0.75,
-  sample_rate = NULL
+  sample_rate = NULL,
+  start_time = NULL,
+  end_time = NULL
 )
 
-read_audio_bin(audio, channels = NULL, sample_rate = NULL)
+read_audio_bin(
+  audio,
+  channels = NULL,
+  sample_rate = NULL,
+  start_time = NULL,
+  end_time = NULL
+)
 }
 \arguments{
-\item{audio}{path to the audio file}
+\item{audio}{path to the input sound or video file containing the audio stream}
 
 \item{window}{vector with weights defining the moving \link[=hanning]{fft window function}.
 The length of this vector is the size of the window and hence determines the output
@@ -26,34 +34,44 @@ frequency range.}
 \item{sample_rate}{downsample audio to reduce FFT output size. Default keeps sample
 rate from the input file.}
 
-\item{channels}{number of output channels, set to 1 to conver to mono sound}
+\item{start_time, end_time}{position (in seconds) to cut input stream to be processed.}
+
+\item{channels}{number of output channels, set to 1 to convert to mono sound}
 }
 \description{
-Fast implementation to read audio files in any format. Use \link{read_audio_bin} to read
-raw audio samples, and \link{read_audio_fft} to stream-convert directly to frequency domain
-(spectrum data) using FFmpeg built-in FFT.
+Reads raw audio data from any common audio or video format. Use \link{read_audio_bin} to
+get raw PCM audio samples, or \link{read_audio_fft} to stream-convert directly into
+frequency domain (spectrum) data using FFmpeg built-in FFT.
 }
 \details{
-Use the \code{plot()} method on data returned by \link{read_audio_fft} to show the spectrogram.
-The \link{av_spectrogram_video} generates a video based on the spectrogram with a moving bar
-and background audio.
+Currently \link{read_audio_fft} automatically converts input audio to mono channel such
+that we get a single matrix. Use the \code{plot()} method on data returned by \link{read_audio_fft}
+to show the spectrogram. The \link{av_spectrogram_video} generates a video that plays
+the audio while showing an animated spectrogram with moving status bar, which is
+very cool.
 }
 \examples{
 # Use a 5 sec fragment
 wonderland <- system.file('samples/Synapsis-Wonderland.mp3', package='av')
-av_audio_convert(wonderland, 'example.mp3', total_time = 5)
 
-# Read as frequency spectrum
-fft_data <- read_audio_fft('example.mp3')
+# Read initial 5 sec as as frequency spectrum
+fft_data <- read_audio_fft(wonderland, end_time = 5.0)
 dim(fft_data)
 
 # Plot the spectrogram
 plot(fft_data)
 
 # Show other parameters
-dim(read_audio_fft('example.mp3', hamming(2048)))
-dim(read_audio_fft('example.mp3', hamming(4096)))
-
-# Cleanup
-unlink('example.mp3')
+dim(read_audio_fft(wonderland, end_time = 5.0, hamming(2048)))
+dim(read_audio_fft(wonderland, end_time = 5.0, hamming(4096)))
 }
+\seealso{
+Other av: 
+\code{\link{capturing}},
+\code{\link{demo}()},
+\code{\link{encoding}},
+\code{\link{formats}},
+\code{\link{info}},
+\code{\link{logging}}
+}
+\concept{av}
