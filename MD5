@@ -1,7 +1,7 @@
-714b570ae5fbd1e13491193674233c02 *DESCRIPTION
+1247822c96dfb7d601b0b5d995b45a7f *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 5eaed4a19d69231054bcce409637182c *NAMESPACE
-11ec5047310cc00d7f9c716ca29f8a0f *NEWS
+2d0c24e55a39f4fe1ef5f9f402ca3c07 *NEWS
 7b8ee75582aaa5fb32001f5d4a404410 *R/capture.R
 09297e26567858c53ee2736dd0575fb2 *R/demo.R
 9ddde35c98cdff18d7f3a34f0ce372de *R/encode.R
@@ -18,7 +18,7 @@ bc7baead3b6080f04dc81efd2fe1ff39 *cleanup
 c111200b85b56912514fc296f8eb3a92 *man/capturing.Rd
 94681a50ec4c9166eef54593265f0369 *man/demo.Rd
 4697c518dadd2a6ab5b6bedc0b0636d3 *man/encoding.Rd
-30c97fff1b9b141fb2ecc57ef4e74863 *man/formats.Rd
+b28e484188c93f11947fd0997443fd66 *man/formats.Rd
 eb2bc7b28f1ef272f8fbcf228ec46df7 *man/info.Rd
 43739e827d110eb374cbc96cad715a57 *man/logging.Rd
 b4709fe1a55e1b1e2924dc160e680715 *man/read_audio.Rd
@@ -26,12 +26,12 @@ c4b370b567f07562d71abdd28b5c5050 *man/winfunc.Rd
 3b358ba7207825b74d2192af3ccf6984 *src/Makevars.in
 2cec33791efd347cbcb051402d7cf9c4 *src/Makevars.ucrt
 ba5b51f6f574ef65abbd9c9966008ab1 *src/Makevars.win
-5a6495c99f169a87a26058a948b9c50a *src/fft.c
+da1c5cd4bd5493e812fc6b52d647a16e *src/fft.c
 3ea4946ea259565fb2886acb7839dbb2 *src/formats.c
-5b7b8d777c1bfc084c4b16ea3aa3b4a8 *src/info.c
+802b5bf3b81c20d0f648a223f9693184 *src/info.c
 e54a01fbb7811bc483a39ff5a7f9c179 *src/init.c
-ee4e80e77a3964d0c89602edea22fb1b *src/video.c
-690266ac80a60828d21b63dc005ac2cb *src/winfunc.c
+1f71cb56d6caa2a7b1f8227deff3bd9d *src/video.c
+5c95dacf692bc9eec6a5353e967e4517 *src/winfunc.c
 410b901019704722333754e7fd7f9636 *tests/testthat.R
 9f3b6bbfe9eeb9d125e6856fe8700054 *tests/testthat/test-audio.R
 64c17aaa11da784f55d5f308b136c0fb *tests/testthat/test-fft.R
