@@ -1,7 +1,7 @@
-1247822c96dfb7d601b0b5d995b45a7f *DESCRIPTION
+495e2ed22f9660e1e3cc57fe787b99ee *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 5eaed4a19d69231054bcce409637182c *NAMESPACE
-2d0c24e55a39f4fe1ef5f9f402ca3c07 *NEWS
+31fcbd5b571e39b1432633096671a50d *NEWS
 7b8ee75582aaa5fb32001f5d4a404410 *R/capture.R
 09297e26567858c53ee2736dd0575fb2 *R/demo.R
 9ddde35c98cdff18d7f3a34f0ce372de *R/encode.R
@@ -26,11 +26,12 @@ c4b370b567f07562d71abdd28b5c5050 *man/winfunc.Rd
 3b358ba7207825b74d2192af3ccf6984 *src/Makevars.in
 2cec33791efd347cbcb051402d7cf9c4 *src/Makevars.ucrt
 ba5b51f6f574ef65abbd9c9966008ab1 *src/Makevars.win
-da1c5cd4bd5493e812fc6b52d647a16e *src/fft.c
+71cdefbdb2c63b849b606c3b4502e328 *src/avcompat.h
+d74d4099e0882eb6456ba65288442522 *src/fft.c
 3ea4946ea259565fb2886acb7839dbb2 *src/formats.c
-802b5bf3b81c20d0f648a223f9693184 *src/info.c
+ca7d45a613674bff57258a4db78ff310 *src/info.c
 e54a01fbb7811bc483a39ff5a7f9c179 *src/init.c
-1f71cb56d6caa2a7b1f8227deff3bd9d *src/video.c
+c4e4e88a9a7e45a935db683fccba18ba *src/video.c
 5c95dacf692bc9eec6a5353e967e4517 *src/winfunc.c
 410b901019704722333754e7fd7f9636 *tests/testthat.R
 9f3b6bbfe9eeb9d125e6856fe8700054 *tests/testthat/test-audio.R
