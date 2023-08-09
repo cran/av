@@ -1,7 +1,7 @@
-2b9bf21e530fc18c83a6b960c01a79e8 *DESCRIPTION
+5e8305be12665ac5b5350ae110b00c68 *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 5eaed4a19d69231054bcce409637182c *NAMESPACE
-547c84f1a3e50443f829fdcb770a0511 *NEWS
+8f760602acf4fc6401ad8c188e4936e3 *NEWS
 7b8ee75582aaa5fb32001f5d4a404410 *R/capture.R
 09297e26567858c53ee2736dd0575fb2 *R/demo.R
 9ddde35c98cdff18d7f3a34f0ce372de *R/encode.R
@@ -30,7 +30,7 @@ ecf48e3a5eaa1aafe19b4a6a466a983c *src/fft.c
 b0992f7f14d76ce6c737fca558f8e1f1 *src/formats.c
 ca7d45a613674bff57258a4db78ff310 *src/info.c
 d8c22dbfa8f61d0022b091e06d31f1f8 *src/init.c
-4438bc64c8977540378763a92c36ea8e *src/video.c
+ef401c7d02b20202e60acd02ed133d92 *src/video.c
 5c95dacf692bc9eec6a5353e967e4517 *src/winfunc.c
 410b901019704722333754e7fd7f9636 *tests/testthat.R
 9f3b6bbfe9eeb9d125e6856fe8700054 *tests/testthat/test-audio.R
