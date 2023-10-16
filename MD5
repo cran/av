@@ -1,7 +1,7 @@
-6d8e12dd5cb3f764a431aadf21222336 *DESCRIPTION
+47aa52fe6830a49e632d3cf4bf98e5de *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 5eaed4a19d69231054bcce409637182c *NAMESPACE
-cb9ccf38bad43107e637688b4f2e5523 *NEWS
+7e679e427e257bbdd458d20a16885256 *NEWS
 7b8ee75582aaa5fb32001f5d4a404410 *R/capture.R
 09297e26567858c53ee2736dd0575fb2 *R/demo.R
 9ddde35c98cdff18d7f3a34f0ce372de *R/encode.R
@@ -24,7 +24,7 @@ eb2bc7b28f1ef272f8fbcf228ec46df7 *man/info.Rd
 b4709fe1a55e1b1e2924dc160e680715 *man/read_audio.Rd
 c4b370b567f07562d71abdd28b5c5050 *man/winfunc.Rd
 1fe6c6b8afb3c17edd3e27a7770a8eea *src/Makevars.in
-e95981405bb37e3fdbafdf51322f2091 *src/Makevars.win
+de56ed312e09da5f78449f99ed1c7eab *src/Makevars.win
 71cdefbdb2c63b849b606c3b4502e328 *src/avcompat.h
 ecf48e3a5eaa1aafe19b4a6a466a983c *src/fft.c
 b0992f7f14d76ce6c737fca558f8e1f1 *src/formats.c
