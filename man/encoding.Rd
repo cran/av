@@ -26,6 +26,7 @@ av_audio_convert(
   format = NULL,
   channels = NULL,
   sample_rate = NULL,
+  bit_rate = NULL,
   start_time = NULL,
   total_time = NULL,
   verbose = TRUE
@@ -55,12 +56,15 @@ be \code{TRUE} or \code{FALSE} or an integer with a valid \link{av_log_level}.}
 
 \item{video}{input video file with optionally also an audio track}
 
-\item{format}{a valid format name from the list of \code{av_muxers()}. Default
-\code{NULL} tries to guess a format from the file extension.}
+\item{format}{a valid output format name from the list of \code{av_muxers()}. Default
+\code{NULL} infers format from the file extension.}
 
-\item{channels}{number of output channels. Default \code{NULL} is to match input}
+\item{channels}{number of output channels. Default \code{NULL} will match input.}
 
-\item{sample_rate}{output sampling rate. Default \code{NULL} is to match input}
+\item{sample_rate}{output sampling rate. Default \code{NULL} will match input.}
+
+\item{bit_rate}{output bitrate (quality). A common value is 192000. Default
+\code{NULL} will match input.}
 
 \item{start_time}{number greater than 0, seeks in the input file to position.}
 
@@ -74,16 +78,22 @@ track. If input contains video files, this effectively combines and converts the
 to the specified output format.
 }
 \details{
-The target container format is automatically determined from the file extension of
-the output file, for example \code{mp4}, \code{mkv}, \code{mov}, or \code{flv}. Most systems also
-support \code{gif} output, but the compression~quality for gif is quite bad.
-The \href{https://cran.r-project.org/package=gifski}{gifski} package is better suited
-for generating animated gif files.
+The target container format and audio/video codes are automatically determined from
+the file extension of the output file, for example \code{mp4}, \code{mkv}, \code{mov}, or \code{flv}.
+For video output, most systems also support \code{gif} output, but the compression~quality
+for gif is really bad. The \href{https://cran.r-project.org/package=gifski}{gifski} package
+is better suited for generating animated gif files. Still using a proper video format
+is results in much better quality.
 
 It is recommended to use let ffmpeg choose the suitable codec for a given container
 format. Most video formats default to the \code{libx264} video codec which has excellent
-compression and works on all modern \href{https://caniuse.com/#search=h264}{browsers},
-operating systems, and digital TVs.
+compression and works on all modern browsers, operating systems, and digital TVs.
+
+To convert from/to raw PCM audio, use file extensions \code{".ub"} or \code{".sb"} for 8bit
+unsigned or signed respectively, or \code{".uw"} or \code{".sw"} for 16-bit, see \code{extensions}
+in \code{\link[=av_muxers]{av_muxers()}}. Alternatively can also convert to other raw audio PCM by setting
+for example \code{format = "u16le"} (i.e. unsigned 16-bit little-endian) or another option
+from the \code{name} column in \code{\link[=av_muxers]{av_muxers()}}.
 
 It is safe to interrupt the encoding process by pressing CTRL+C, or via \link{setTimeLimit}.
 When the encoding is interrupted, the output stream is properly finalized and all open

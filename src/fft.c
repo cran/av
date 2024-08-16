@@ -9,8 +9,6 @@
 #include <libavutil/tx.h>
 #endif
 
-#define R_NO_REMAP
-#define STRICT_R_HEADERS
 #include <Rinternals.h>
 
 enum AmplitudeScale { AS_LINEAR, AS_SQRT, AS_CBRT, AS_LOG, NB_ASCALES };
@@ -84,7 +82,6 @@ static void close_input(input_container **x){
   input_container *input = *x;
   if(input == NULL)
     return;
-  avcodec_close(input->decoder);
   avcodec_free_context(&(input->decoder));
   avformat_close_input(&input->demuxer);
   avformat_free_context(input->demuxer);

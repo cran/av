@@ -5,16 +5,22 @@
 #' track. If input contains video files, this effectively combines and converts them
 #' to the specified output format.
 #'
-#' The target container format is automatically determined from the file extension of
-#' the output file, for example `mp4`, `mkv`, `mov`, or `flv`. Most systems also
-#' support `gif` output, but the compression~quality for gif is quite bad.
-#' The [gifski](https://cran.r-project.org/package=gifski) package is better suited
-#' for generating animated gif files.
+#' The target container format and audio/video codes are automatically determined from
+#' the file extension of the output file, for example `mp4`, `mkv`, `mov`, or `flv`.
+#' For video output, most systems also support `gif` output, but the compression~quality
+#' for gif is really bad. The [gifski](https://cran.r-project.org/package=gifski) package
+#' is better suited for generating animated gif files. Still using a proper video format
+#' is results in much better quality.
 #'
 #' It is recommended to use let ffmpeg choose the suitable codec for a given container
 #' format. Most video formats default to the `libx264` video codec which has excellent
-#' compression and works on all modern [browsers](https://caniuse.com/#search=h264),
-#' operating systems, and digital TVs.
+#' compression and works on all modern browsers, operating systems, and digital TVs.
+#'
+#' To convert from/to raw PCM audio, use file extensions `".ub"` or `".sb"` for 8bit
+#' unsigned or signed respectively, or `".uw"` or `".sw"` for 16-bit, see `extensions`
+#' in [av_muxers()]. Alternatively can also convert to other raw audio PCM by setting
+#' for example `format = "u16le"` (i.e. unsigned 16-bit little-endian) or another option
+#' from the `name` column in [av_muxers()].
 #'
 #' It is safe to interrupt the encoding process by pressing CTRL+C, or via [setTimeLimit].
 #' When the encoding is interrupted, the output stream is properly finalized and all open
@@ -78,18 +84,21 @@ av_video_convert <- function(video, output = "output.mp4", verbose = TRUE){
 #' @rdname encoding
 #' @export
 #' @useDynLib av R_convert_audio
-#' @param channels number of output channels. Default `NULL` is to match input
-#' @param sample_rate output sampling rate. Default `NULL` is to match input
-#' @param format a valid format name from the list of `av_muxers()`. Default
-#' `NULL` tries to guess a format from the file extension.
+#' @param channels number of output channels. Default `NULL` will match input.
+#' @param sample_rate output sampling rate. Default `NULL` will match input.
+#' @param bit_rate output bitrate (quality). A common value is 192000. Default
+#' `NULL` will match input.
+#' @param format a valid output format name from the list of `av_muxers()`. Default
+#' `NULL` infers format from the file extension.
 #' @param start_time number greater than 0, seeks in the input file to position.
 #' @param total_time approximate number of seconds at which to limit the duration
 #' of the output file.
 av_audio_convert <- function(audio, output = 'output.mp3', format = NULL,
-                             channels = NULL, sample_rate = NULL, start_time = NULL,
-                             total_time = NULL, verbose = TRUE){
+                             channels = NULL, sample_rate = NULL, bit_rate = NULL,
+                             start_time = NULL, total_time = NULL, verbose = TRUE){
   stopifnot(length(audio) > 0)
-  audio <- normalizePath(audio, mustWork = TRUE)
+  input <- normalizePath(audio, mustWork = TRUE)
+  attributes(input) <- attributes(audio)
   stopifnot(length(output) == 1)
   output <- normalizePath(output, mustWork = FALSE)
   stopifnot(file.exists(dirname(output)))
@@ -98,6 +107,8 @@ av_audio_convert <- function(audio, output = 'output.mp3', format = NULL,
     stopifnot(is.numeric(channels))
   if(length(sample_rate))
     stopifnot(is.numeric(sample_rate))
+  if(length(bit_rate))
+    stopifnot(is.numeric(bit_rate))
   if(is.logical(verbose))
     verbose <- ifelse(isTRUE(verbose), 32, 16)
   if(length(start_time))
@@ -107,5 +118,5 @@ av_audio_convert <- function(audio, output = 'output.mp3', format = NULL,
   old_log_level <- av_log_level()
   on.exit(av_log_level(old_log_level), add = TRUE)
   av_log_level(verbose)
-  .Call(R_convert_audio, audio, output, format, channels, sample_rate, start_time, total_time)
+  .Call(R_convert_audio, input, output, format, channels, sample_rate, bit_rate, start_time, total_time)
 }

@@ -1,5 +1,3 @@
-#define R_NO_REMAP
-#define STRICT_R_HEADERS
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
@@ -32,7 +30,7 @@ attribute_visible void R_init_av(DllInfo *dll) {
   /* .Call calls */
   extern SEXP R_audio_fft(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
   extern SEXP R_audio_bin(SEXP, SEXP, SEXP, SEXP, SEXP);
-  extern SEXP R_convert_audio(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+  extern SEXP R_convert_audio(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
   extern SEXP R_encode_video(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
   extern SEXP R_generate_window(SEXP, SEXP);
   extern SEXP R_get_open_handles(void);
@@ -46,7 +44,7 @@ attribute_visible void R_init_av(DllInfo *dll) {
   static const R_CallMethodDef CallEntries[] = {
     {"R_audio_fft",        (DL_FUNC) &R_audio_fft,        6},
     {"R_audio_bin",        (DL_FUNC) &R_audio_bin,        5},
-    {"R_convert_audio",    (DL_FUNC) &R_convert_audio,    7},
+    {"R_convert_audio",    (DL_FUNC) &R_convert_audio,    8},
     {"R_encode_video",     (DL_FUNC) &R_encode_video,     6},
     {"R_generate_window",  (DL_FUNC) &R_generate_window,  2},
     {"R_get_open_handles", (DL_FUNC) &R_get_open_handles, 0},
