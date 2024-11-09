@@ -1,7 +1,7 @@
-906023f91c9d0231f50667afce59d45f *DESCRIPTION
+6c272ce034db7d4927b26e8680905721 *DESCRIPTION
 27b6128fe44dac890bf5c9dfce3a744c *LICENSE
 eb82016b0d7db697508a3e77eaf70460 *NAMESPACE
-d84de00ff109835c9dfe678cfd8e4fb5 *NEWS
+7837882fba67994c3103d796fccaa15c *NEWS
 7b8ee75582aaa5fb32001f5d4a404410 *R/capture.R
 09297e26567858c53ee2736dd0575fb2 *R/demo.R
 910558d5f9cb1514df631d3f55d75cb5 *R/encode.R
@@ -12,7 +12,7 @@ b12a5754170192e6f7c670fba52e2846 *R/images.R
 256ec27aa9802a19367bb93514eda892 *R/logging.R
 0b27f7d0489d4ccd0a806fb42fae0767 *R/winfunc.R
 bc7baead3b6080f04dc81efd2fe1ff39 *cleanup
-6e54dc90128ff94bf6b48c92ca85601a *configure
+9c0233b5bdccf2b2af23c40f5b145100 *configure
 1b479943f6adaf8d342ac1095f42baa1 *inst/samples/Synapsis-Wonderland.mp3
 37820f5d7d0b4a489b49c9062ad711fc *man/av_video_images.Rd
 c111200b85b56912514fc296f8eb3a92 *man/capturing.Rd
@@ -25,12 +25,12 @@ eb2bc7b28f1ef272f8fbcf228ec46df7 *man/info.Rd
 c4b370b567f07562d71abdd28b5c5050 *man/winfunc.Rd
 b65209d367b8be40998431ba9298d441 *src/Makevars.in
 5d0c39467097e9def963031d443576a1 *src/Makevars.win
-98b03cc1474cb3e770d0031d868edca7 *src/avcompat.h
+eb15198a2474cf414dec853f05a3b139 *src/avcompat.h
 c02dd0479db8e268218e0c8f7c925db3 *src/fft.c
-7a50815e0586b0778ff22356e1df4044 *src/formats.c
+8510f787e9936cba8fdc08350c4d799a *src/formats.c
 4783dd05b1f9272e87fef5d1694661ef *src/info.c
 a6fe2cf755169ddbd9eb647a8eb4bd5f *src/init.c
-8f48acb9790c7e625e8cefaa0cbbbb30 *src/video.c
+f3d6c6297f8d32376df4af3937042229 *src/video.c
 1442e28fa63c10aa798e739cfaf4535c *src/winfunc.c
 9cf05139d872f6e538db1d1f417099cf *tests/testthat.R
 9f3b6bbfe9eeb9d125e6856fe8700054 *tests/testthat/test-audio.R
