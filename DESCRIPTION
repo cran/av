@@ -1,7 +1,7 @@
 Package: av
 Type: Package
 Title: Working with Audio and Video in R
-Version: 0.9.3
+Version: 0.9.4
 Authors@R: person("Jeroen", "Ooms", role = c("aut", "cre"), email = "jeroenooms@gmail.com",
     comment = c(ORCID = "0000-0002-4035-0289"))
 Description: Bindings to 'FFmpeg' <http://www.ffmpeg.org/> AV library for working with 
@@ -13,7 +13,7 @@ License: MIT + file LICENSE
 URL: https://ropensci.r-universe.dev/av, https://docs.ropensci.org/av/
 BugReports: https://github.com/ropensci/av/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 SystemRequirements: FFmpeg (>= 3.2); with at least libx264 and lame
         (mp3) drivers. MacOS Homebrew: ffmpeg. Debian/Ubuntu:
         libavfilter-dev. Fedora/RHEL: either ffmpeg-devel from
@@ -22,11 +22,11 @@ SystemRequirements: FFmpeg (>= 3.2); with at least libx264 and lame
 Depends: R (>= 3.5)
 Imports: graphics
 Config/pkgdown: seewave, ggplot2, phonTools, signal, tuneR
-Suggests: testthat, ps, ggplot2, gapminder
+Suggests: curl, testthat, ps, ggplot2, gapminder
 Language: en-US
 NeedsCompilation: yes
-Packaged: 2024-11-09 22:24:13 UTC; jeroen
+Packaged: 2025-01-29 21:35:13 UTC; jeroen
 Author: Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>)
 Maintainer: Jeroen Ooms <jeroenooms@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-11-09 22:50:02 UTC
+Date/Publication: 2025-01-29 22:10:02 UTC

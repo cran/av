@@ -8,7 +8,7 @@
 #define NEW_FFT_TX_API
 #endif
 
-/* Old FFT API was marked deprecated in ffmpeg 7.1 */
+/* Old method was marked deprecated in ffmpeg 7.1 */
 #if LIBAVUTIL_VERSION_MAJOR > 59 || (LIBAVUTIL_VERSION_MAJOR == 59 && LIBAVUTIL_VERSION_MINOR >= 39)
 #define NEW_DEFAULT_CODEC_API
 #endif
