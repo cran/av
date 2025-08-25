@@ -1,9 +1,10 @@
 Package: av
 Type: Package
 Title: Working with Audio and Video in R
-Version: 0.9.4
-Authors@R: person("Jeroen", "Ooms", role = c("aut", "cre"), email = "jeroenooms@gmail.com",
-    comment = c(ORCID = "0000-0002-4035-0289"))
+Version: 0.9.5
+Authors@R: 
+    person("Jeroen", "Ooms", , "jeroenooms@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-4035-0289"))
 Description: Bindings to 'FFmpeg' <http://www.ffmpeg.org/> AV library for working with 
     audio and video in R. Generates high quality video from images or R graphics with 
     custom audio. Also offers high performance tools for reading raw audio, creating
@@ -21,12 +22,12 @@ SystemRequirements: FFmpeg (>= 3.2); with at least libx264 and lame
         which is a more limited version available on Fedora/EPEL9.
 Depends: R (>= 3.5)
 Imports: graphics
-Config/pkgdown: seewave, ggplot2, phonTools, signal, tuneR
+Config/Needs/website: seewave, ggplot2, phonTools, signal, tuneR
 Suggests: curl, testthat, ps, ggplot2, gapminder
 Language: en-US
 NeedsCompilation: yes
-Packaged: 2025-01-29 21:35:13 UTC; jeroen
-Author: Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>)
+Packaged: 2025-08-25 16:35:19 UTC; jeroen
+Author: Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>)
 Maintainer: Jeroen Ooms <jeroenooms@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-01-29 22:10:02 UTC
+Date/Publication: 2025-08-25 17:10:02 UTC
