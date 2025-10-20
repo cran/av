@@ -1,7 +1,7 @@
 Package: av
 Type: Package
 Title: Working with Audio and Video in R
-Version: 0.9.5
+Version: 0.9.6
 Authors@R: 
     person("Jeroen", "Ooms", , "jeroenooms@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4035-0289"))
@@ -26,8 +26,8 @@ Config/Needs/website: seewave, ggplot2, phonTools, signal, tuneR
 Suggests: curl, testthat, ps, ggplot2, gapminder
 Language: en-US
 NeedsCompilation: yes
-Packaged: 2025-08-25 16:35:19 UTC; jeroen
+Packaged: 2025-10-19 16:45:30 UTC; jeroen
 Author: Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>)
 Maintainer: Jeroen Ooms <jeroenooms@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-08-25 17:10:02 UTC
+Date/Publication: 2025-10-20 05:10:40 UTC
